@@ -22,10 +22,10 @@ In-memory scoreboard format:
 """
 
 from games import load_game
+from scoreboard import load_scoreboard, save_scoreboard
 
-# TODO: from scoreboard import load_scoreboard, save_scoreboard
 
-GAMES = ("example_game",)
+GAMES = ("rock_paper_scissors", "hangman")
 
 
 def game_title(module_name):
@@ -49,7 +49,7 @@ def show_menu():
     print(f"{len(GAMES) + 2}. Quit")
 
 
-def choose_game(choice):
+def choose_game(choice) -> str | None:
     """Return the module name for a menu choice, or None for an invalid choice.
 
     :param choice: the player's menu input
@@ -77,7 +77,7 @@ def record_score(scoreboard, player_name, module_name, score):
     scoreboard[module_name].append({"player": player_name, "score": score})
 
 
-def best_record(records):
+def best_record(records) -> dict | None:
     """Return the highest-scoring record, or None when records is empty.
 
     :param records: a list of {"player": ..., "score": ...} records
@@ -123,8 +123,8 @@ def play_game(scoreboard, player_name, module_name):
         return
     score = game.play(player_name)
     record_score(scoreboard, player_name, module_name, score)
-    # TODO: save scoreboard to scoreboard.json here.
     print(f"Score recorded: {score}")
+    save_scoreboard(scoreboard, "scoreboard.json")
 
 
 def main():
@@ -134,9 +134,35 @@ def main():
     while not player_name:
         player_name = input("Please enter a name: ").strip()
 
-    # TODO: load scoreboard.json here. Start fresh if it is missing,
-    # malformed, or not in the expected shape.
-    scoreboard = {}
+    scoreboard = load_scoreboard("scoreboard.json")
+
+    for module_name in GAMES:
+        valid = True
+
+        if not isinstance(scoreboard.get(module_name, []), list):
+            scoreboard = {}
+            break
+
+        records = scoreboard.get(module_name, [])
+
+        for record in records:
+            if isinstance(record, dict):
+                if not isinstance(record.get("player"), str):
+                    scoreboard = {}
+                    valid = False
+                    break
+                if not isinstance(record.get("score"), int):
+                    scoreboard = {}
+                    valid = False
+                    break
+            else:
+                scoreboard = {}
+                valid = False
+                break
+
+        if valid is False:
+            break
+
     while True:
         show_menu()
         choice = input("Choose: ").strip()
