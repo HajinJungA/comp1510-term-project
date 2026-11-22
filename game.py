@@ -140,6 +140,7 @@ def main():
         valid = True
 
         if not isinstance(scoreboard.get(module_name, []), list):
+            print("Invalid scoreboard data. Starting with an empty scoreboard.")
             scoreboard = {}
             break
 
@@ -148,14 +149,19 @@ def main():
         for record in records:
             if isinstance(record, dict):
                 if not isinstance(record.get("player"), str):
+                    print("Invalid scoreboard data. Starting with an empty scoreboard.")
                     scoreboard = {}
                     valid = False
                     break
-                if not isinstance(record.get("score"), int):
+
+                score = record.get("score")
+                if type(score) != int or score < 0:
+                    print("Invalid scoreboard data. Starting with an empty scoreboard.")
                     scoreboard = {}
                     valid = False
                     break
             else:
+                print("Invalid scoreboard data. Starting with an empty scoreboard.")
                 scoreboard = {}
                 valid = False
                 break
