@@ -38,13 +38,15 @@ def play(player_name: str) -> int:
     score = 0
     computer_score = 0
 
+    print(f"Welcome to Rock-Paper-Scissors, {player_name}!")
+
     while True:
         while True:
-            player = input(f"{player_name}'s choice: ")
+            player = input("Choose rock, paper, or scissors: ")
             if player.lower() in CHOICES:
                 break
             else:
-                print("Invalid choice")
+                print("Invalid choice. Please enter rock, paper, or scissors.")
         computer_choice = random.choice(CHOICES)
         result = decide_winner(player.lower(), computer_choice)
         print(f"Computer's choice: {computer_choice}")
@@ -54,7 +56,7 @@ def play(player_name: str) -> int:
             print("You won this round!")
         elif result == "computer":
             computer_score += 1
-            print("Computer won this round!")
+            print("The computer won this round!")
         elif result == "tie":
             print("It's a tie!")
 
@@ -66,6 +68,6 @@ def play(player_name: str) -> int:
             return score
 
         elif computer_score == 3:
-            print("Computer won the match!")
+            print("The computer won the match!")
             print(f"Final score - {player_name}: {score}, Computer: {computer_score}")
             return score
