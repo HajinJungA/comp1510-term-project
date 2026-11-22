@@ -58,11 +58,20 @@ The scoreboard shows the highest score for each game.
 project, and install `pytest` from the **Python Packages** panel. Then run
 `game.py` to play, and right-click the `tests` folder to run the tests.
 
-**Terminal:** from the top-level folder, set up once:
+**Terminal:** From the top-level folder, set up once:
 
 ```sh
 python3 -m venv .venv
-source .venv/bin/activate
+```
+
+Activate the virtual environment:
+
+- macOS/Linux: `source .venv/bin/activate`
+- Windows Git Bash: `source .venv/Scripts/activate`
+
+Then install pytest:
+
+```sh
 python -m pip install pytest
 ```
 
