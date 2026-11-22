@@ -41,7 +41,7 @@
 - How it ends (win, lose, or out of turns):
   The player wins if they guess the whole word before making 6 wrong guesses.
   The player loses if they make 6 wrong guesses before completing the word.
-  When the game ends, it shows whether the player won or lost, reveals the full word, and displays the final score.
+  When the game ends, it shows whether the player won or lost, reveal the full word, and displays the final score.
 - How a score is earned (the formula or rule, and why higher is better):
   The player's score is the number of wrong guesses remaining when the game ends.
   The player starts with 6 attempts and loses 1 for each wrong guess. For example, if the player wins with 2 wrong guesses, the final score is 4.
