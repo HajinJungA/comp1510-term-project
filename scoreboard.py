@@ -24,7 +24,7 @@ def load_scoreboard(filename):
             print("Could not load the scoreboard. Starting with an empty scoreboard.")
             return {}
 
-    except (FileNotFoundError, json.JSONDecodeError):
+    except (FileNotFoundError, json.JSONDecodeError, UnicodeDecodeError):
         print("Could not load the scoreboard. Starting with an empty scoreboard.")
         return {}
 
