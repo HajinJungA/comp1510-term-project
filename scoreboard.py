@@ -4,6 +4,7 @@ Write load_scoreboard and save_scoreboard so the arcade keeps scores across
 restarts. Their docstrings and the tests in tests/test_scoreboard.py define
 the required behavior.
 """
+import json
 
 
 def load_scoreboard(filename):
@@ -13,10 +14,19 @@ def load_scoreboard(filename):
     :return: the scoreboard as a dictionary. The caller still checks the
              nested record shape, as the README describes
     """
-    # TODO: open filename, read it as JSON, and return a dictionary.
-    # Start with an empty dictionary and print a friendly message when the
-    # file is missing, is not valid JSON, or does not hold a dictionary.
-    raise NotImplementedError("load_scoreboard is yours to write")
+    try:
+        with open(filename, "r") as file:
+            data = json.load(file)
+
+        if isinstance(data, dict):
+            return data
+        else:
+            print("Could not load the scoreboard. Starting with an empty scoreboard.")
+            return {}
+
+    except (FileNotFoundError, json.JSONDecodeError):
+        print("Could not load the scoreboard. Starting with an empty scoreboard.")
+        return {}
 
 
 def save_scoreboard(scoreboard, filename):
@@ -26,5 +36,5 @@ def save_scoreboard(scoreboard, filename):
     :param filename: name of the JSON scoreboard file
     :return: None
     """
-    # TODO: open filename for writing and save scoreboard as JSON.
-    raise NotImplementedError("save_scoreboard is yours to write")
+    with open(filename, "w") as file:
+        json.dump(scoreboard, file)
